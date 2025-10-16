@@ -1,6 +1,19 @@
+// src/components/HeroInteractive.tsx
 import { useEffect, useRef, useState } from "react";
 
-/** Stable typing for H1 */
+type Props = {
+  headlineText?: string;
+  baseSpeed?: number; // ms per char baseline
+  fontPx?: number; // canvas font size
+  rowPadding?: number;
+  colPadding?: number;
+  gridStep?: number; // px grid spacing
+  lightRowPanel?: boolean; // soft panel in light mode
+  topPullMobile?: string; // e.g. "-mt-20"
+  topPullDesktop?: string; // e.g. "md:-mt-20"
+};
+
+/** Stable typing for H1 (mouse boosts speed, but won’t reset). */
 function useTypingEffectStable(
   text: string,
   baseSpeed = 95,
@@ -11,31 +24,38 @@ function useTypingEffectStable(
   const rafRef = useRef<number | null>(null);
   const accRef = useRef(0);
   const lastRef = useRef<number | null>(null);
+
   useEffect(() => {
     idxRef.current = 0;
     setOut("");
     accRef.current = 0;
     lastRef.current = null;
+
     const loop = (t: number) => {
       if (lastRef.current == null) lastRef.current = t;
       const dt = t - (lastRef.current || t);
       lastRef.current = t;
+
       const boost = boostRef?.current ?? 0;
       const perChar = Math.max(45, baseSpeed * (1 - 0.6 * boost));
+
       accRef.current += dt;
       while (accRef.current >= perChar && idxRef.current <= text.length) {
         idxRef.current += 1;
         accRef.current -= perChar;
         setOut(text.slice(0, idxRef.current));
       }
-      if (idxRef.current <= text.length)
+      if (idxRef.current <= text.length) {
         rafRef.current = requestAnimationFrame(loop);
+      }
     };
+
     rafRef.current = requestAnimationFrame(loop);
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, [text, baseSpeed, boostRef]);
+
   return out;
 }
 
@@ -53,6 +73,7 @@ function isDarkTheme() {
 }
 
 type Token = { text: string; color: string };
+
 function tokenizePy(line: string, dark: boolean): Token[] {
   const colors = dark
     ? {
@@ -71,8 +92,10 @@ function tokenizePy(line: string, dark: boolean): Token[] {
         op: "#4b5563",
         comm: "#6b7280",
       };
+
   if (line.trimStart().startsWith("#"))
     return [{ text: line, color: colors.comm }];
+
   const out: Token[] = [];
   const parts = line.split(
     /(\s+|#[^\n]*|\".*?\"|\'.*?\'|\bdef\b|\bclass\b|\breturn\b|\bif\b|\bfor\b|\bwhile\b|\bimport\b|\bfrom\b|\bas\b|\btry\b|\bexcept\b|\bfinally\b|\bwith\b|\bpass\b|\braise\b|\bawait\b|\basync\b|\blambda\b|\bTrue\b|\bFalse\b|\bNone\b)/g
@@ -92,14 +115,14 @@ function tokenizePy(line: string, dark: boolean): Token[] {
       continue;
     }
     if (
-      /(^|\b)(def|class|async|await|return|if|for|while|import|from|as|try|except|finally|with|pass|raise|lambda|True|False|None)(\b|$)/.test(
+      /\b(def|class|async|await|return|if|for|while|import|from|as|try|except|finally|with|pass|raise|lambda|True|False|None)\b/.test(
         p
       )
     ) {
       out.push({ text: p, color: colors.kw });
       continue;
     }
-    if (/^[\(\)\[\]\{\}\=\+\-\*\/\:\.\,]+$/.test(p)) {
+    if (/^[()\[\]{}=+\-*/:.,]+$/.test(p)) {
       out.push({ text: p, color: colors.op });
       continue;
     }
@@ -153,24 +176,34 @@ function generateCodeLines(count = 160): string[] {
   return lines;
 }
 
-export default function HeroInteractive() {
+export default function HeroInteractive({
+  headlineText = "We build bespoke software. No CMS. Just engineering.",
+  baseSpeed = 95,
+  fontPx = 20,
+  rowPadding = 28,
+  colPadding = 28,
+  gridStep = 24,
+  lightRowPanel = true,
+  topPullMobile = "-mt-20",
+  topPullDesktop = "md:-mt-20",
+}: Props) {
   const prefersReducedMotion =
     typeof window !== "undefined" &&
     window.matchMedia &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const boostRef = useRef(0);
-  const headline = useTypingEffectStable(
-    "We build bespoke software. No CMS. Just engineering.",
-    95,
-    boostRef
-  );
 
+  const headline = useTypingEffectStable(headlineText, baseSpeed, boostRef);
+
+  // Mouse → speed boost
   useEffect(() => {
     if (prefersReducedMotion) return;
     let lastT = performance.now();
     let lastX = 0,
       lastY = 0;
+
     const onMove = (e: MouseEvent) => {
       const t = performance.now();
       const dx = e.clientX - lastX;
@@ -194,28 +227,22 @@ export default function HeroInteractive() {
     };
   }, [prefersReducedMotion]);
 
+  // Canvas
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const canvasEl = canvasRef.current;
+    if (!canvasEl) return;
+    const ctx = canvasEl.getContext("2d");
     if (!ctx) return;
-    const LINES = generateCodeLines(160);
+
+    const LINES = generateCodeLines(180);
     let isDark = isDarkTheme();
+
     let width = 0,
       height = 0,
       dpr = Math.max(1, window.devicePixelRatio || 1);
-    let raf: number;
-
-    function resize() {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = Math.floor(width * dpr);
-      canvas.height = Math.floor(height * dpr);
-      canvas.style.width = width + "px";
-      canvas.style.height = height + "px";
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      drawBG();
-    }
+    let raf: number | null = null;
+    let lastT: number | null = null;
+    const state = { startLine: 0, typingCol: 0, acc: 0 };
 
     function drawBG() {
       ctx.clearRect(0, 0, width, height);
@@ -223,20 +250,21 @@ export default function HeroInteractive() {
       const bg = (cs.getPropertyValue("--bg") || "#1d1e22").trim();
       ctx.fillStyle = bg;
       ctx.fillRect(0, 0, width, height);
+
       ctx.strokeStyle = isDark ? "rgba(127,127,127,0.12)" : "rgba(0,0,0,0.06)";
-      for (let x = 0; x < width; x += 24) {
+      for (let x = 0; x < width; x += gridStep) {
         ctx.beginPath();
         ctx.moveTo(x, 0);
         ctx.lineTo(x, height);
         ctx.stroke();
       }
-      for (let y = 0; y < height; y += 24) {
+      for (let y = 0; y < height; y += gridStep) {
         ctx.beginPath();
         ctx.moveTo(0, y);
         ctx.lineTo(width, y);
         ctx.stroke();
       }
-      if (!isDark) {
+      if (!isDark && lightRowPanel) {
         const g = ctx.createLinearGradient(0, 0, 0, height);
         g.addColorStop(0, "rgba(0,0,0,0.06)");
         g.addColorStop(0.12, "rgba(0,0,0,0)");
@@ -247,37 +275,56 @@ export default function HeroInteractive() {
       }
     }
 
-    const FONT_PX = 20;
-    const rowPad = 28;
-    const colPad = 28;
-    const rowHeight = Math.round(FONT_PX * 1);
-    ctx.font = `600 ${FONT_PX}px "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace`;
-    const state = { startLine: 0, typingCol: 0, acc: 0 };
-
-    function render() {
+    function resize() {
+      // ✅ re-check the ref inside to satisfy TS
+      const c = canvasRef.current;
+      if (!c) return;
+      width = window.innerWidth;
+      height = window.innerHeight;
+      c.width = Math.floor(width * dpr);
+      c.height = Math.floor(height * dpr);
+      c.style.width = width + "px";
+      c.style.height = height + "px";
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       drawBG();
-      if (!isDark) {
+    }
+
+    const rowHeight = Math.round(fontPx * 1.1);
+    ctx.font = `600 ${fontPx}px "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace`;
+
+    function render(t: number) {
+      if (lastT == null) lastT = t;
+      const dt = t - lastT;
+      lastT = t;
+
+      drawBG();
+      if (!isDark && lightRowPanel) {
         ctx.fillStyle = "rgba(0,0,0,0.025)";
         ctx.fillRect(
           0,
-          rowPad - Math.round(FONT_PX * 0.8),
+          rowPadding - Math.round(fontPx * 0.8),
           width,
-          height - (rowPad - Math.round(FONT_PX * 0.8)) * 2
+          height - (rowPadding - Math.round(fontPx * 0.8)) * 2
         );
       }
-      const visibleRows = Math.floor((height - rowPad * 2) / rowHeight) - 1;
+
+      const visibleRows = Math.floor((height - rowPadding * 2) / rowHeight) - 1;
       const perCharBase = 110;
       const perChar = Math.max(
         45,
         perCharBase * (1 - 0.5 * (boostRef.current || 0))
       );
-      state.acc += 16.7;
+
+      state.acc += dt;
+
       for (let i = 0; i < visibleRows; i++) {
         const li = (state.startLine + i) % LINES.length;
-        const y = rowPad + (i + 1) * rowHeight;
+        const y = rowPadding + (i + 1) * rowHeight;
         const line = LINES[li];
         const fullyTyped =
           i < visibleRows - 1 || state.typingCol >= line.length;
+
+        // soft text shadow only in light
         if (!isDark) {
           ctx.shadowColor = "rgba(0,0,0,0.15)";
           ctx.shadowBlur = 4;
@@ -287,38 +334,39 @@ export default function HeroInteractive() {
           ctx.shadowBlur = 0;
           ctx.shadowOffsetY = 0;
         }
+
+        const drawLine = (txt: string) => {
+          const tokens = tokenizePy(txt, isDark);
+          let x = colPadding;
+          for (const tk of tokens) {
+            ctx.fillStyle = tk.color;
+            ctx.fillText(tk.text, x, y);
+            x += ctx.measureText(tk.text).width;
+          }
+          return x;
+        };
+
         if (fullyTyped) {
-          const tokens = tokenizePy(line, isDark);
-          let x = colPad;
-          for (const tk of tokens) {
-            ctx.fillStyle = tk.color;
-            ctx.fillText(tk.text, x, y);
-            x += ctx.measureText(tk.text).width;
-          }
+          drawLine(line);
         } else {
-          const partial = line.slice(0, state.typingCol);
-          const tokens = tokenizePy(partial, isDark);
-          let x = colPad;
-          for (const tk of tokens) {
-            ctx.fillStyle = tk.color;
-            ctx.fillText(tk.text, x, y);
-            x += ctx.measureText(tk.text).width;
-          }
+          const x = drawLine(line.slice(0, state.typingCol));
+          // caret
           if (Math.floor(performance.now() / 500) % 2 === 0) {
             ctx.fillStyle = (isDark ? "#d4d4dc" : "#111827") + "AA";
-            const caretH = Math.round(FONT_PX * 1.1);
-            const caretOffsetY = Math.round(FONT_PX * 0.9);
+            const caretH = Math.round(fontPx * 1.1);
+            const caretOffsetY = Math.round(fontPx * 0.9);
             ctx.fillRect(
               x,
               y - caretOffsetY,
-              Math.max(2 + FONT_PX / 10, 9),
+              Math.max(2 + fontPx / 10, 9),
               caretH
             );
           }
         }
       }
-      if (state.acc >= perChar) {
-        state.acc = 0;
+
+      while (state.acc >= perChar) {
+        state.acc -= perChar;
         state.typingCol += 1;
         const currentIdx = (state.startLine + visibleRows - 1) % LINES.length;
         const currentLine = LINES[currentIdx];
@@ -327,6 +375,7 @@ export default function HeroInteractive() {
           state.startLine = (state.startLine + 1) % LINES.length;
         }
       }
+
       raf = requestAnimationFrame(render);
     }
 
@@ -340,19 +389,40 @@ export default function HeroInteractive() {
     });
 
     resize();
-    window.addEventListener("resize", resize);
+    window.addEventListener("resize", resize, { passive: true });
     raf = requestAnimationFrame(render);
+
+    // pause when tab hidden to save battery
+    const onVis = () => {
+      if (document.hidden) {
+        if (raf) cancelAnimationFrame(raf);
+        raf = null;
+      } else if (!raf) {
+        lastT = null;
+        raf = requestAnimationFrame(render);
+      }
+    };
+    document.addEventListener("visibilitychange", onVis);
+
     return () => {
       window.removeEventListener("resize", resize);
+      document.removeEventListener("visibilitychange", onVis);
       mo.disconnect();
-      cancelAnimationFrame(raf);
+      if (raf) cancelAnimationFrame(raf);
     };
-  }, [prefersReducedMotion]);
+  }, [
+    prefersReducedMotion,
+    fontPx,
+    rowPadding,
+    colPadding,
+    gridStep,
+    lightRowPanel,
+  ]);
 
   return (
     <section
       id="home"
-      className="relative min-h-[100svh] flex items-center overflow-hidden -mt-20 md:-mt-20">
+      className={`relative min-h-[100svh] flex items-center overflow-hidden ${topPullMobile} ${topPullDesktop}`}>
       {!prefersReducedMotion && (
         <canvas
           ref={canvasRef}
@@ -360,6 +430,7 @@ export default function HeroInteractive() {
           aria-hidden
         />
       )}
+
       <div className="container relative z-10 py-16 md:py-24">
         <div className="max-w-3xl card p-8 md:p-10 transition-shadow duration-300">
           <h1 className="text-3xl md:text-5xl font-bold leading-tight">
