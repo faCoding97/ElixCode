@@ -23,6 +23,9 @@ export default function Home() {
           content="Custom websites, ERP/Inventory, QR/Barcode systems, and robust integrations."
         />
         <meta property="og:url" content={origin} />
+
+        {/* ICO (classic) */}
+        <link rel="icon" href="/favicon.ico?v=2" sizes="any" />
       </Head>
       <HeroInteractive />
       <Services />

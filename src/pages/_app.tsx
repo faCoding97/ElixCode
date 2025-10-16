@@ -35,7 +35,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     "@type": ["Organization", "LocalBusiness"],
     name: "ElixCode",
     url: origin,
-    logo: origin + "/images/logo.svg",
+    logo: origin + "/images/logo.png",
     email: "facoding97@gmail.com",
     address: {
       "@type": "PostalAddress",
