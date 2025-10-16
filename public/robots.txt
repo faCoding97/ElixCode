@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ElixCode.com/sitemap.xml

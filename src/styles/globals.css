@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #f9fafb;
+  --fg: #3d3d3f;
+  --surface: #ffffff;
+  --brand: #2563eb;
+}
+:root[data-theme="dark"] {
+  --bg: #1d1e22;
+  --fg: #f9fafb;
+  --surface: #393f4d;
+  --brand: #2563eb;
+}
+
+html,
+body,
+#__next {
+  height: 100%;
+}
+body {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.card {
+  background-color: var(--surface);
+  border-radius: 1rem;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08), 0 12px 24px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+[data-theme="light"] .card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12), 0 16px 32px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+[data-theme="dark"] .card {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Hide honeypot */
+.hp-hidden {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
