@@ -422,7 +422,7 @@ export default function HeroInteractive() {
             <span className="animate-pulse">|</span>
           </h1>
           <p className="mt-4 text-lg opacity-90">
-            EElixCode builds every kind of website: e-commerce platforms, online
+            ElixCode builds every kind of website: e-commerce platforms, online
             sales systems, &amp; custom web apps, ERP, BPMS, barcode & QR
             workflows, and high-performance integrations.
           </p>
