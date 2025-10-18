@@ -73,11 +73,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <footer className="text-center py-8 text-sm text-gray-500 dark:text-gray-400 border-t border-black/10 dark:border-white/10 mt-20">
           <span className="whitespace-nowrap">Written by:</span>
           <a
-            className="inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r  font-medium rounded-lg transition-all duration-300 transform hover:scale-105  whitespace-nowrap text-sm sm:text-base"
-            href="https://www.linkedin.com/in/farazaghababayi"
+            className="inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r dark:text-blue-600  font-medium rounded-lg transition-all duration-300 transform hover:scale-105  whitespace-nowrap text-sm sm:text-base"
+            href="http://facoding.elixcode.com/"
             target="_blank"
             rel="noopener noreferrer">
-            www.linkedin.com/in/farazaghababayi
+            facoding
           </a>
         </footer>
       </div>

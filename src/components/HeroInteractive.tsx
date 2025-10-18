@@ -173,7 +173,7 @@ export default function HeroInteractive() {
   const boostRef = useRef(0);
 
   const headline = useTypingEffectStable(
-    "We build bespoke software. No CMS. Just engineering.",
+    "From simple stores to enterprise-level solutions - fast, scalable.",
     95,
     boostRef
   );
@@ -422,8 +422,9 @@ export default function HeroInteractive() {
             <span className="animate-pulse">|</span>
           </h1>
           <p className="mt-4 text-lg opacity-90">
-            ElixCode delivers custom web apps, ERP/Inventory solutions, barcode
-            &amp; QR workflows, and high-performance integrations.
+            EElixCode builds every kind of website: e-commerce platforms, online
+            sales systems, &amp; custom web apps, ERP, BPMS, barcode & QR
+            workflows, and high-performance integrations.
           </p>
           <div className="mt-6 flex gap-3">
             <a
@@ -437,9 +438,6 @@ export default function HeroInteractive() {
               View Portfolio
             </a>
           </div>
-          <p className="mt-3 text-xs opacity-70">
-            Move your mouse to subtly speed up the typing background.
-          </p>
         </div>
       </div>
     </section>
