@@ -32,11 +32,11 @@ Thanks!`
     );
 
   const MAILTO_ORDER =
-  `mailto:${CONTACT_EMAIL}?subject=` +
-  encodeURIComponent("New Project Request — ElixCode") +
-  `&body=` +
-  encodeURIComponent(
-    `Hello ElixCode Team,
+    `mailto:${CONTACT_EMAIL}?subject=` +
+    encodeURIComponent("New Project Request — ElixCode") +
+    `&body=` +
+    encodeURIComponent(
+      `Hello ElixCode Team,
 
 I'd like to request a custom software project. Please find my details below:
 
@@ -58,8 +58,13 @@ I'd like to request a custom software project. Please find my details below:
 • 
 • 
 
-🎨 Design Preference:
+🎨 Design Preferences:
 (Modern / Minimal / Corporate / Dark / Light / Custom)
+
+💡 Brand Identity:
+• Company slogan / tagline:
+• Logo file (attach if available):
+• Brand colors or style guide (if any):
 
 🕒 Expected Timeline:
 (Desired start date & completion target)
@@ -77,15 +82,14 @@ I'd like to request a custom software project. Please find my details below:
 Please review this information and get back to me with:
 • Estimated cost or pricing model
 • Expected development timeline
-• Any questions you might have before starting
+• Any questions before starting
 
 Thank you,
 [Your Name]
 [Your Company / Position]
 [Date]
 `
-  );
-
+    );
 
   const orgJsonLd = {
     "@context": "https://schema.org",
