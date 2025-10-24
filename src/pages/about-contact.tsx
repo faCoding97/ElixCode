@@ -1,92 +1,122 @@
 import Head from "next/head";
 import QRTool from "@/components/QRTool";
-import { useState } from "react";
 
 export default function AboutContact() {
   const origin = process.env.NEXT_PUBLIC_SITE_ORIGIN || "https://ElixCode.com";
-  const [loading, setLoading] = useState(false);
-  const [ok, setOk] = useState<string | null>(null);
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setLoading(true);
-    setOk(null);
-    const fd = new FormData(e.currentTarget);
-    const payload: Record<string, any> = {};
-    fd.forEach((v, k) => (payload[k] = v));
-    const res = await fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-    const j = await res.json();
-    setLoading(false);
-    setOk(
-      j?.ok
-        ? "Thanks — we'll get back to you shortly."
-        : j?.message || "Something went wrong."
+  const DISPLAY_PHONE = "+27 72 933 0166";
+  const TEL_LINK = "tel:+27 72 9330166";
+  const WHATSAPP_LINK =
+    "https://wa.me/27729330166?text=" +
+    encodeURIComponent(
+      "Hi ElixCode team, I’d like to discuss a project.\n— Project type:\n— Timeline:\n— Budget range:"
     );
-    if (j?.ok) (e.currentTarget as any).reset();
-  }
+  const CONTACT_EMAIL = "elixcode@outlook.com";
+  const MAILTO =
+    `mailto:${CONTACT_EMAIL}?subject=` +
+    encodeURIComponent("ElixCode — New Inquiry") +
+    `&body=` +
+    encodeURIComponent(
+      `Hi ElixCode team,
+
+I’d like to get in touch regarding:
+
+— Project type:
+— Timeline:
+— Budget range:
+
+Thanks!`
+    );
+
+  const orgJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "ElixCode",
+    url: origin,
+    email: CONTACT_EMAIL,
+    telephone: "+27729330166",
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        telephone: "+27729330166",
+        contactType: "customer support",
+        email: CONTACT_EMAIL,
+        areaServed: "ZA",
+        availableLanguage: ["en"],
+      },
+    ],
+  };
 
   return (
     <>
       <Head>
-        <title>Contactus — ElixCode</title>
+        <title>Contact Us — ElixCode</title>
         <link rel="canonical" href={origin + "/Contactus"} />
+        <meta
+          name="description"
+          content="Get in touch with ElixCode — we build custom software, ERP/CRM/BPMS, and QR/Barcode solutions for businesses."
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+        />
       </Head>
 
       <main className="container py-16 md:py-24">
-        <h1 className="text-2xl md:text-4xl font-bold">Contactus</h1>
+        <h1 className="text-2xl md:text-4xl font-bold">Contact Us</h1>
         <p className="mt-2 opacity-80 max-w-3xl">
-          ElixCode bridges South Africa and China—lean teams, fast delivery, and
-          no-nonsense engineering. Ping us on WhatsApp (placeholder) or use the
-          form. A QR generator is embedded on this page, too.
+          ElixCode develops custom software — web applications, ERP/CRM/BPMS
+          platforms, and QR/Barcode systems built for real-world performance.
+          Reach us anytime using the options below.
         </p>
 
         <div className="mt-10 grid md:grid-cols-2 gap-8">
           <div className="card p-6">
-            <h2 className="text-xl font-semibold">Contact Form</h2>
-            <form onSubmit={onSubmit} className="mt-4 space-y-3">
-              {/* Honeypot */}
-              <div className="hp-hidden">
-                <label>Company</label>
-                <input name="company" autoComplete="off" />
+            {/* Contact Card — لایت/دارک ملایم */}
+            <section className="p-6 rounded-xl border border-black/10">
+              <div className="inline-flex items-center gap-2 rounded-full border border-black/10 px-3 py-1 text-xs font-semibold">
+                <span className="inline-block h-2 w-2 rounded-full bg-[var(--brand)]" />
+                Contact Options
               </div>
 
-              <label className="block">
-                <span className="text-sm opacity-80">Your name</span>
-                <input
-                  name="name"
-                  required
-                  className="mt-1 w-full rounded-xl border border-black/10 dark:border-white/10 bg-transparent px-3 py-2 outline-none"
-                />
-              </label>
-              <label className="block">
-                <span className="text-sm opacity-80">Email</span>
-                <input
-                  type="email"
-                  name="email"
-                  required
-                  className="mt-1 w-full rounded-xl border border-black/10 dark:border-white/10 bg-transparent px-3 py-2 outline-none"
-                />
-              </label>
-              <label className="block">
-                <span className="text-sm opacity-80">Message</span>
-                <textarea
-                  name="message"
-                  rows={5}
-                  required
-                  className="mt-1 w-full rounded-xl border border-black/10 dark:border-white/10 bg-transparent px-3 py-2 outline-none"
-                />
-              </label>
-              <button
-                disabled={loading}
-                className="px-4 py-2 rounded-2xl bg-[var(--brand)] text-black font-semibold">
-                {loading ? "Sending..." : "Send"}
-              </button>
-              {ok && <p className="text-sm mt-2">{ok}</p>}
-            </form>
+              <div className="mt-5 space-y-3">
+                <a
+                  href={TEL_LINK}
+                  className="flex items-center justify-between rounded-xl border border-black/10 px-4 py-3 transition hover:border-[var(--brand)]/50">
+                  <span className="inline-flex items-center gap-2">
+                    📞 <span className="font-medium">Call</span>
+                  </span>
+                  <span className="text-sm opacity-80">{DISPLAY_PHONE}</span>
+                </a>
+
+                <a
+                  href={WHATSAPP_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between rounded-xl bg-[#25D366] px-4 py-3 font-semibold text-white transition hover:bg-[#1ebe5d]">
+                  <span className="inline-flex items-center gap-2">
+                    💬 <span>WhatsApp</span>
+                  </span>
+                  <span className="text-sm opacity-90">Open Chat</span>
+                </a>
+
+                <a
+                  href={MAILTO}
+                  className="flex items-center justify-between rounded-xl border border-black/10 px-4 py-3 transition hover:border-[var(--brand)]/50">
+                  <span className="inline-flex items-center gap-2">
+                    ✉️ <span className="font-medium">Email</span>
+                  </span>
+                  <span className="text-sm opacity-80">{CONTACT_EMAIL}</span>
+                </a>
+              </div>
+
+              <div className="mt-6 text-sm opacity-80">
+                <p>Prefer SMS or a missed call? We’ll get back to you.</p>
+                <p className="mt-1">
+                  Typical response time: 1–2 business days.
+                </p>
+              </div>
+            </section>
           </div>
 
           <QRTool defaultUrl={origin + "/"} />

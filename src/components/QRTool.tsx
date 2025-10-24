@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
 
 export default function QRTool({ defaultUrl }: { defaultUrl?: string }) {
@@ -32,36 +32,47 @@ export default function QRTool({ defaultUrl }: { defaultUrl?: string }) {
       <p className="opacity-80 text-sm">
         Generate SVG QR codes for ElixCode pages. Only HTTPS URLs are allowed.
       </p>
-      <div className="mt-4 flex flex-col md:flex-row gap-3">
+
+      {/* کنترل‌ها: در موبایل ستونی؛ از md سه‌ستونه */}
+      <div className="mt-4 grid gap-3 md:grid-cols-[1fr_auto_auto]">
         <input
-          className="w-full rounded-xl border border-black/10 dark:border-white/10 bg-transparent px-3 py-2 outline-none"
+          className="w-full rounded-xl border border-black/10 px-3 py-2 outline-none"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           placeholder="https://ElixCode.com/"
           pattern="https://.*"
         />
-        <label className="flex items-center gap-2 text-sm">
+
+        {/* چک‌باکس ریسپانسیو و قابل شکستن متن */}
+        <label
+          htmlFor="utm"
+          className="flex flex-wrap items-center gap-2 text-sm px-2 py-2 md:p-0 border border-black/10 md:border-0 rounded-xl">
           <input
+            id="utm"
             type="checkbox"
             checked={utm}
             onChange={(e) => setUtm(e.target.checked)}
+            className="accent-current"
           />
-          Add UTM
+          <span>Add UTM</span>
         </label>
+
         <button
           onClick={onDownload}
-          className="px-3 py-2 rounded-xl bg-[var(--brand)] text-black font-semibold">
+          className="px-3 py-2 rounded-xl bg-[var(--brand)] text-black font-semibold justify-self-start md:justify-self-end">
           Download SVG
         </button>
       </div>
-      <div className="mt-4 flex items-center gap-6">
+
+      {/* پیش‌نمایش */}
+      <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
         <QRCodeSVG
           value={fullUrl}
           size={160}
           includeMargin
           ref={svgRef as any}
         />
-        <div className="text-xs opacity-80 break-all">{fullUrl}</div>
+        <div className="text-xs opacity-80 break-all select-all">{fullUrl}</div>
       </div>
     </div>
   );
