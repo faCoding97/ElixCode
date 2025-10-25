@@ -173,7 +173,7 @@ export default function HeroInteractive() {
   const boostRef = useRef(0);
 
   const headline = useTypingEffectStable(
-    "From simple stores to enterprise-level solutions - fast, scalable.",
+    "We don’t just build websites — we build business engines.",
     95,
     boostRef
   );
@@ -422,9 +422,8 @@ export default function HeroInteractive() {
             <span className="animate-pulse">|</span>
           </h1>
           <p className="mt-4 text-lg opacity-90">
-            ElixCode builds every kind of website: e-commerce platforms, online
-            sales systems, &amp; custom web apps, ERP, BPMS, barcode & QR
-            workflows, and high-performance integrations.
+            Custom, scalable, and QR-powered digital&amp; systems crafted for
+            performance and trust.
           </p>
           <div className="mt-6 flex gap-3">
             <a

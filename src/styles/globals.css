@@ -25,6 +25,53 @@ body {
   color: var(--fg);
 }
 
+/* استایل‌های input */
+input {
+  background-color: var(--surface);
+  color: var(--fg);
+  border: 1px solid var(--border, rgba(0, 0, 0, 0.1));
+}
+
+/* استایل placeholder */
+input::placeholder {
+  color: var(--fg);
+  opacity: 0.6;
+}
+
+/* تنظیمات خاص برای حالت دارک */
+:root[data-theme="dark"] input {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* تنظیمات خاص برای placeholder در حالت دارک */
+:root[data-theme="dark"] input::placeholder {
+  color: #d1d5db;
+}
+
+/* استایل‌های select */
+select {
+  background-color: var(--surface);
+  color: var(--fg);
+  border: 1px solid var(--border, rgba(0, 0, 0, 0.1));
+}
+
+/* استایل option‌ها */
+select option {
+  background-color: var(--surface);
+  color: var(--fg);
+}
+
+/* تنظیمات خاص برای حالت دارک */
+:root[data-theme="dark"] select {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* تنظیمات option‌ها در حالت دارک */
+:root[data-theme="dark"] select option {
+  background-color: #2d3748; /* پس‌زمینه کمی تیره‌تر برای تمایز */
+  color: #f9fafb;
+}
+
 .card {
   background-color: var(--surface);
   border-radius: 1rem;
@@ -53,3 +100,37 @@ html {
   height: 1px;
   overflow: hidden;
 }
+
+/* Start  RequestProjectCard.tsx*/
+.card {
+  padding: 1rem;
+}
+
+@media (min-width: 640px) {
+  .card {
+    padding: 1.25rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1270px) {
+  .card .grid {
+    grid-template-columns: 1fr; /* تک‌ستونی در بازه 720px تا 1270px */
+    gap: 0.75rem;
+  }
+  .card .grid a {
+    padding: 0.75rem 1rem; /* کاهش پدینگ دکمه‌ها */
+    font-size: 0.95rem; /* کاهش اندازه فونت دکمه‌ها */
+  }
+}
+
+@media (min-width: 1280px) {
+  .card {
+    padding: 1.5rem;
+  }
+  .card .grid {
+    grid-template-columns: 1fr 1fr; /* دو ستونی در رزولوشن‌های بزرگ‌تر */
+    gap: 1rem;
+  }
+}
+
+/* Rnd */

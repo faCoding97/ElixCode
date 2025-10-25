@@ -1,7 +1,16 @@
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import ThemeToggle from "./ThemeToggle";
 import { useRouter } from "next/router";
-import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  FaHome,
+  FaCogs,
+  FaBriefcase,
+  FaInfoCircle,
+  FaBlog,
+  FaBars,
+  FaRocket,
+} from "react-icons/fa"; // آیکون‌های جدید
 
 export default function Navbar() {
   const router = useRouter();
@@ -13,6 +22,7 @@ export default function Navbar() {
   >("home");
   const [compact, setCompact] = useState(false);
   const [open, setOpen] = useState(false);
+  const [spacerH, setSpacerH] = useState(0);
 
   // --- refs
   const sectionsRef = useRef<string[]>(["home", "services", "portfolio"]);
@@ -20,27 +30,75 @@ export default function Navbar() {
   const navBoxRef = useRef<HTMLDivElement | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
 
-  // compute dynamic offset based on header height
-  const scrollOffset = useMemo(() => {
-    if (!navBoxRef.current) return 92; // fallback
-    const rect = navBoxRef.current.getBoundingClientRect();
-    return Math.round(rect.height + 12); // header height + top gap (top-3≈12px)
-  }, [compact]); // compact changes height
+  // --- scroll close controls
+  const openedAtYRef = useRef<number>(0);
+  const ignoreScrollUntilRef = useRef<number>(0);
+  const SCROLL_CLOSE_THRESHOLD = 120;
+  const OPEN_IGNORE_WINDOW_MS = 200;
 
-  // close mobile menu on route change
+  // --- compute scroll offset
+  const scrollOffset = useMemo(() => {
+    if (!navBoxRef.current) return 92;
+    const rect = navBoxRef.current.getBoundingClientRect();
+    return Math.round(rect.height + 12);
+  }, [compact]);
+
+  // --- measure navbar height for spacer
+  useEffect(() => {
+    const measure = () => {
+      if (!navBoxRef.current) return;
+      const rect = navBoxRef.current.getBoundingClientRect();
+      setSpacerH(Math.round(rect.height + 12));
+    };
+
+    measure();
+
+    let ro: any = null;
+
+    if (typeof window !== "undefined") {
+      const RO = (window as any).ResizeObserver;
+      if (RO) {
+        ro = new RO(() => measure());
+        if (navBoxRef.current) ro.observe(navBoxRef.current);
+      }
+
+      window.addEventListener("resize", measure);
+    }
+
+    const t = setTimeout(measure, 0);
+
+    return () => {
+      if (typeof window !== "undefined") {
+        window.removeEventListener("resize", measure);
+      }
+      if (ro && navBoxRef.current) ro.unobserve(navBoxRef.current);
+      if (ro?.disconnect) ro.disconnect();
+      clearTimeout(t);
+    };
+  }, [open, compact]);
+
+  // --- close menu on route change
   useEffect(() => {
     const off = () => setOpen(false);
     router.events?.on("routeChangeComplete", off);
     return () => router.events?.off("routeChangeComplete", off);
   }, [router.events]);
 
-  // close mobile menu on scroll / outside click / escape
+  // --- close menu on scroll / escape / outside click
   useEffect(() => {
-    const onScroll = () => open && setOpen(false);
+    const onScroll = () => {
+      if (!open) return;
+      const now = Date.now();
+      if (now < ignoreScrollUntilRef.current) return;
+      const dy = Math.abs(window.scrollY - openedAtYRef.current);
+      if (dy > SCROLL_CLOSE_THRESHOLD) setOpen(false);
+    };
+
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
     };
-    const onClickOutside = (e: MouseEvent) => {
+
+    const onPointerDownOutside = (e: PointerEvent) => {
       if (!open) return;
       const target = e.target as Node;
       if (
@@ -52,30 +110,19 @@ export default function Navbar() {
         setOpen(false);
       }
     };
+
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("keydown", onKey);
-    window.addEventListener("mousedown", onClickOutside);
+    window.addEventListener("pointerdown", onPointerDownOutside);
+
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("keydown", onKey);
-      window.removeEventListener("mousedown", onClickOutside);
+      window.removeEventListener("pointerdown", onPointerDownOutside);
     };
   }, [open]);
 
-  // route-based active link (non-home pages)
-  useEffect(() => {
-    if (router.pathname.startsWith("/blog")) setActive("blog");
-    else if (router.pathname.startsWith("/about-contact")) setActive("about");
-    else if (router.pathname === "/") {
-      const hash =
-        typeof window !== "undefined"
-          ? window.location.hash.replace("#", "")
-          : "";
-      setActive((hash as any) || "home");
-    }
-  }, [router.pathname]);
-
-  // scroll progress + compact header
+  // --- scroll progress + compact header
   useEffect(() => {
     const onScroll = () => {
       const sTop = window.scrollY;
@@ -89,7 +136,20 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // section spy only on home
+  // --- active route detection
+  useEffect(() => {
+    if (router.pathname.startsWith("/blog")) setActive("blog");
+    else if (router.pathname.startsWith("/about-contact")) setActive("about");
+    else if (router.pathname === "/") {
+      const hash =
+        typeof window !== "undefined"
+          ? window.location.hash.replace("#", "")
+          : "";
+      setActive((hash as any) || "home");
+    }
+  }, [router.pathname]);
+
+  // --- section spy (only on home)
   useEffect(() => {
     if (router.pathname !== "/") return;
     const obs = new IntersectionObserver(
@@ -110,7 +170,7 @@ export default function Navbar() {
     return () => obs.disconnect();
   }, [router.pathname]);
 
-  // smooth scroll with dynamic offset
+  // --- smooth scroll
   const onNavClick = (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
     targetId: "home" | "services" | "portfolio"
@@ -132,133 +192,159 @@ export default function Navbar() {
     key === active ? "text-[var(--brand)] underline underline-offset-4" : "";
 
   return (
-    <div
-      className="sticky top-3 z-50 px-3 sm:px-4 md:px-6"
-      ref={headerRef as any}>
-      <header
-        ref={navBoxRef}
-        className={`mx-auto w-full max-w-5xl rounded-2xl border bg-[var(--bg)]/85 backdrop-blur
-        border-black/10 dark:border-white/10 shadow-lg transition-all
-        ${compact ? "scale-[0.99]" : "scale-100"}`}>
-        {/* NAV BAR */}
-        <nav
-          className={`px-4 md:px-6 flex items-center justify-between ${
-            compact ? "py-2.5" : "py-3.5"
-          }`}
-          aria-label="Primary">
-          <Link href="/" className="flex items-center gap-2 font-medium">
-            <img
-              src="/images/logo.png"
-              alt="ElixCode Logo"
-              className="w-7 h-7 rounded-xl shadow-sm"
-            />
-            <span>ElixCode</span>
-          </Link>
-
-          {/* Desktop menu */}
-          <div className="hidden md:flex items-center gap-4">
-            <a
-              href="#home"
-              onClick={(e) => onNavClick(e, "home")}
-              className={`hover:underline ${activeCls("home")}`}>
-              Home
-            </a>
-            <a
-              href="#services"
-              onClick={(e) => onNavClick(e, "services")}
-              className={`hover:underline ${activeCls("services")}`}>
-              Services
-            </a>
-            <a
-              href="#portfolio"
-              onClick={(e) => onNavClick(e, "portfolio")}
-              className={`hover:underline ${activeCls("portfolio")}`}>
-              Portfolio
-            </a>
-            <Link
-              href="/about-contact"
-              className={`hover:underline ${activeCls("about")}`}>
-              Contact us
+    <>
+      {/* fixed navbar container */}
+      <div
+        className="fixed top-3 left-0 right-0 z-50 px-3 sm:px-4 md:px-6"
+        ref={headerRef as any}>
+        <header
+          ref={navBoxRef}
+          className={`mx-auto w-full max-w-5xl rounded-2xl border bg-[var(--bg)]/85 backdrop-blur
+          border-black/10 dark:border-[rgb(37_99_235)] shadow-lg transition-all
+          ${compact ? "scale-[0.99]" : "scale-100"}`}>
+          {/* NAV BAR */}
+          <nav
+            className={`px-4 md:px-6 flex items-center justify-between ${
+              compact ? "py-2.5" : "py-3.5"
+            }`}
+            aria-label="Primary">
+            <Link href="/" className="flex items-center gap-2 font-medium">
+              <img
+                src="/images/logo.png"
+                alt="ElixCode Logo"
+                className="w-7 h-7 rounded-xl shadow-sm"
+              />
+              {/* آیکون مکمل لوگو */}
+              <span>ElixCode</span>
             </Link>
-            <Link
-              href="/blog"
-              className={`hover:underline ${activeCls("blog")}`}>
-              Blog
-            </Link>
-            <ThemeToggle />
-          </div>
 
-          {/* Mobile toggles */}
-          <div className="md:hidden flex items-center gap-2">
-            <ThemeToggle />
-            <button
-              aria-label="Open Menu"
-              aria-expanded={open}
-              aria-controls="mobile-menu"
-              onClick={() => setOpen((v) => !v)}
-              className="p-2 rounded-xl border border-black/10 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/60">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M4 7h16M4 12h16M4 17h16"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </button>
-          </div>
-        </nav>
+            {/* Desktop menu */}
+            <div className="hidden md:flex items-center gap-4">
+              <a
+                href="#home"
+                onClick={(e) => onNavClick(e, "home")}
+                className={`flex items-center gap-2 hover:underline ${activeCls(
+                  "home"
+                )}`}>
+                <FaHome className="text-base" /> Home
+              </a>
+              <a
+                href="#services"
+                onClick={(e) => onNavClick(e, "services")}
+                className={`flex items-center gap-2 hover:underline ${activeCls(
+                  "services"
+                )}`}>
+                <FaCogs className="text-base" /> Services
+              </a>
+              <a
+                href="#portfolio"
+                onClick={(e) => onNavClick(e, "portfolio")}
+                className={`flex items-center gap-2 hover:underline ${activeCls(
+                  "portfolio"
+                )}`}>
+                <FaBriefcase className="text-base" /> Portfolio
+              </a>
+              <Link
+                href="/about-contact"
+                className={`flex items-center gap-2 hover:underline ${activeCls(
+                  "about"
+                )}`}>
+                <FaInfoCircle className="text-base" /> Contact us
+              </Link>
+              <Link
+                href="/blog"
+                className={`flex items-center gap-2 hover:underline ${activeCls(
+                  "blog"
+                )}`}>
+                <FaBlog className="text-base" /> Blog
+              </Link>
+              <ThemeToggle />
+            </div>
 
-        {/* Progress (thinner than nav) */}
-        <div className="px-4 md:px-6 pb-2">
-          <div className="h-[4px] bg-transparent rounded-full overflow-hidden">
-            <div
-              className="h-full bg-[var(--brand)] transition-[width] duration-150 rounded-full"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-        </div>
+            {/* Mobile toggles */}
+            <div className="md:hidden flex items-center gap-2">
+              <ThemeToggle />
+              <button
+                aria-label="Open Menu"
+                aria-expanded={open}
+                aria-controls="mobile-menu"
+                onClick={() => {
+                  openedAtYRef.current = window.scrollY;
+                  ignoreScrollUntilRef.current =
+                    Date.now() + OPEN_IGNORE_WINDOW_MS;
+                  setOpen((v) => !v);
+                }}
+                className="p-2 rounded-xl border border-black/10 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/60">
+                <FaBars className="w-5 h-5" />{" "}
+                {/* آیکون جدید برای منوی موبایل */}
+              </button>
+            </div>
+          </nav>
 
-        {/* Mobile menu — same width as nav box */}
-        {open && (
-          <div className="md:hidden px-4 pb-4" id="mobile-menu" ref={menuRef}>
-            <div className="rounded-xl border border-black/10 dark:border-white/10 bg-[var(--surface)] shadow-md overflow-hidden">
-              <div className="flex flex-col">
-                <a
-                  className={`px-4 py-3 ${activeCls("home")}`}
-                  href="#home"
-                  onClick={(e) => onNavClick(e, "home")}>
-                  Home
-                </a>
-                <a
-                  className={`px-4 py-3 ${activeCls("services")}`}
-                  href="#services"
-                  onClick={(e) => onNavClick(e, "services")}>
-                  Services
-                </a>
-                <a
-                  className={`px-4 py-3 ${activeCls("portfolio")}`}
-                  href="#portfolio"
-                  onClick={(e) => onNavClick(e, "portfolio")}>
-                  Portfolio
-                </a>
-                <Link
-                  className={`px-4 py-3 ${activeCls("about")}`}
-                  href="/about-contact"
-                  onClick={() => setOpen(false)}>
-                  About & Contact
-                </Link>
-                <Link
-                  className={`px-4 py-3 ${activeCls("blog")}`}
-                  href="/blog"
-                  onClick={() => setOpen(false)}>
-                  Blog
-                </Link>
-              </div>
+          {/* Progress */}
+          <div className="px-4 md:px-6 pb-2">
+            <div className="h-[4px] bg-transparent rounded-full overflow-hidden">
+              <div
+                className="h-full bg-[var(--brand)] transition-[width] duration-150 rounded-full"
+                style={{ width: `${progress}%` }}
+              />
             </div>
           </div>
-        )}
-      </header>
-    </div>
+
+          {/* Mobile menu */}
+          {open && (
+            <div className="md:hidden px-4 pb-4" id="mobile-menu" ref={menuRef}>
+              <div className="rounded-xl border border-black/10 dark:border-white/10 bg-[var(--surface)] shadow-md overflow-hidden">
+                <div className="flex flex-col">
+                  <a
+                    className={`px-4 py-3 flex items-center gap-2 ${activeCls(
+                      "home"
+                    )}`}
+                    href="#home"
+                    onClick={(e) => onNavClick(e, "home")}>
+                    <FaHome className="text-base" /> Home
+                  </a>
+                  <a
+                    className={`px-4 py-3 flex items-center gap-2 ${activeCls(
+                      "services"
+                    )}`}
+                    href="#services"
+                    onClick={(e) => onNavClick(e, "services")}>
+                    <FaCogs className="text-base" /> Services
+                  </a>
+                  <a
+                    className={`px-4 py-3 flex items-center gap-2 ${activeCls(
+                      "portfolio"
+                    )}`}
+                    href="#portfolio"
+                    onClick={(e) => onNavClick(e, "portfolio")}>
+                    <FaBriefcase className="text-base" /> Portfolio
+                  </a>
+                  <Link
+                    className={`px-4 py-3 flex items-center gap-2 ${activeCls(
+                      "about"
+                    )}`}
+                    href="/about-contact"
+                    onClick={() => setOpen(false)}>
+                    <FaInfoCircle className="text-base" /> About & Contact
+                  </Link>
+                  <Link
+                    className={`px-4 py-3 flex items-center gap-2 ${activeCls(
+                      "blog"
+                    )}`}
+                    href="/blog"
+                    onClick={() => setOpen(false)}>
+                    <FaBlog className="text-base" /> Blog
+                  </Link>
+                </div>
+              </div>
+            </div>
+          )}
+        </header>
+      </div>
+
+      {/* Spacer to prevent content overlap */}
+      <div aria-hidden="true" style={{ height: spacerH }} />
+    </>
   );
 }

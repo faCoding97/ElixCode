@@ -10,72 +10,75 @@ const posts: Post[] = [
   {
     slug: "website-and-qr-digital-showcase-growth",
     title: "One Website. One QR Code. Unlimited Reach.",
-    date: "2025-10-25",
+    date: "2025-10-26",
     summary:
       "We help businesses build trust, visibility, and engagement — combining a powerful website with a smart QR system that connects you to customers everywhere, 24/7.",
     content: `
 Imagine turning every flyer, window, or product into a digital gateway.  
-With a modern website and one simple QR code, your business can be open, visible, and discoverable — anytime, anywhere.
+With one website and one simple QR code, your business becomes open, visible, and discoverable — anytime, anywhere.
 
-At ElixCode, we create systems that blend both worlds:  
-a professional website that earns trust, and a QR-powered showcase that puts your brand in every customer’s hand.
+At ElixCode, we don’t just build websites — we build business engines.  
+We connect your offline world to your online audience, helping your brand grow faster, smarter, and stronger.
 
----
+ 🧭 Build Credibility That Converts  
+Your website is your digital proof of professionalism — fast, mobile-ready, and built for growth.  
+It tells customers: *we’re real, we’re reliable, and we mean business.*
 
-🧭 Build Credibility That Converts  
-Your website is your proof of professionalism — fast, mobile-ready, and built for growth.  
-It tells customers: *we’re real, we’re reliable, and we’re ready for business.*
+ 🌍 Always Open. Always Working.  
+While your office sleeps, your digital presence keeps working.  
+Visitors explore your offers, send inquiries, and share your links — automatically growing your visibility, 24/7.
 
----
-
-🌍 Always Open. Always Working.  
-While your office sleeps, your digital presence works.  
-Visitors explore your offers, make inquiries, and share your links — 24 hours a day.
-
----
-
-📈 Own Your Marketing, Don’t Rent It  
+ 📈 Own Your Marketing, Don’t Rent It  
 Social media is borrowed attention.  
-Your website is owned attention — the core of SEO, ads, and campaigns that keep your brand independent and in control.
+Algorithms change, reach drops — but your website is owned attention.  
+It’s the foundation of your SEO, ads, and campaigns — keeping your brand independent and in control.
 
----
+ 📲 One Scan. Infinite Possibilities.  
+Every QR code you print — on flyers, doors, menus, or packaging — becomes a bridge to your business.  
+One scan gives instant access to your products, prices, services, and contact info.
 
-📲 Your Entire Business, One QR Away  
-One scan — and your world opens.  
-Products, prices, services, menus, photos — everything accessible instantly.  
-No app required, no barrier to entry.
+ Display services, menus, and contact details  
+ Use on posters, packages, or storefronts  
+ Update anytime, from anywhere  
+ 100% online — no app needed, no barrier to entry
 
-✅ Display services, menus, and contact details  
-✅ Use on posters, packages, or storefronts  
-✅ Update anytime, from anywhere  
-✅ 100% online — free to access and easy to share
+ 📊 Smarter Data, Smarter Growth  
+Your website and QR hub collect valuable insights — who visits, what they view, and how they interact.  
+We turn that data into better business decisions that help you grow with precision.
 
----
+ 💬 Real Results for Real Businesses  
+Local brands using ElixCode systems have seen:  
+- 3× more inquiries from walk-in customers  
+- Easier updates without reprinting flyers  
+- Increased repeat visits through QR-powered offers  
+- A professional image that earns long-term trust
 
-📊 Smarter Data, Smarter Growth  
-Your website and QR hub collect insights — who visits, what they view, and how they interact.  
-We turn that data into better sales decisions.
+Whether you run a salon, restaurant, store, or service, our systems scale with you — from simple showcase sites to enterprise-level solutions.
 
----
+ ⚙️ Powered by Modern Technology  
+We design secure, high-performance, and scalable web + QR systems using Next.js, React, Tailwind CSS, and TypeScript — technology built for real business, not just code.
 
-💡 The Result  
-More trust.  
-More traffic.  
-More growth — all powered by one website and one QR code.
+Your website isn’t just a page — it’s your digital engine, driving visibility and sales.
 
----
+ 💡 The Result  
+        More trust.  
+        More traffic.  
+        More growth.  
 
-🚀 ElixCode: We Build Systems That Work  
-We design high-performance, secure, and scalable web + QR solutions using Next.js, React, Tailwind CSS, and TypeScript — technology built for business, not just code.
+All powered by one website and one QR code — crafted for your business.
 
-📞 Start your digital journey or talk with our experts today:  
-👉 [https://elixcode.com/about-contact](https://elixcode.com/about-contact)
+ 🚀 Ready to Build Yours?  
+Your customers are already online — your business should be too.  
+Let’s build your digital showcase together.
+
+
+ElixCode — We Build Systems That Work.
   `.trim(),
   },
   {
     slug: "scalable-ecommerce-solutions",
     title: "Scalable E-Commerce: From Startup to Enterprise in One Platform",
-    date: "2025-10-26",
+    date: "2025-10-25",
     summary:
       "Launch or grow your online store with a fast, secure, and customizable e-commerce platform built for scale and seamless customer experiences.",
     content: `
@@ -101,7 +104,7 @@ Outcome: A store that’s fast, reliable, and ready to handle your next big spik
   {
     slug: "qr-driven-customer-engagement",
     title: "QR-Driven Engagement: Connect Customers to Your Brand Instantly",
-    date: "2025-10-27",
+    date: "2025-10-24",
     summary:
       "Turn every physical touchpoint into a digital opportunity with QR codes that drive traffic, engagement, and loyalty.",
     content: `
@@ -127,7 +130,7 @@ Result: Turn casual passersby into loyal customers with a seamless digital bridg
   {
     slug: "modern-web-for-smes",
     title: "Modern Web for SMEs: Affordable, Fast, and Built to Convert",
-    date: "2025-10-28",
+    date: "2025-10-23",
     summary:
       "Small and medium businesses deserve big-impact websites—fast, affordable, and designed to turn visitors into customers.",
     content: `
@@ -151,7 +154,7 @@ Outcome: A digital presence that works as hard as you do, without breaking the b
   {
     slug: "data-driven-business-dashboards",
     title: "Data-Driven Dashboards: See Your Business Clearly",
-    date: "2025-10-29",
+    date: "2025-10-25",
     summary:
       "Custom dashboards that simplify your data—sales, inventory, or customer insights—into clear, actionable visuals.",
     content: `
@@ -177,7 +180,7 @@ Outcome: Make faster, smarter decisions with data you can trust.
   {
     slug: "offline-first-inventory-management",
     title: "Offline-First Inventory: Scan, Track, Sync—Anywhere",
-    date: "2025-10-30",
+    date: "2025-10-23",
     summary:
       "Manage your inventory with QR-powered, offline-first solutions that keep your team moving, even without Wi-Fi.",
     content: `
