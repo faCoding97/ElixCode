@@ -1,5 +1,5 @@
-// app/sitemap.ts
-import { MetadataRoute } from "next";
+// src/app/sitemap.ts
+import type { MetadataRoute } from "next";
 import posts from "@/data/posts";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -8,16 +8,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const pages = ["", "/about-contact", "/blog", "/qr", "/portfolio"].map(
     (path) => ({
       url: `${baseUrl}${path}`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
+      lastModified: new Date(), // Date ok
+      changeFrequency: "monthly" as const, // ← literal
       priority: 0.8,
     })
   );
 
-  const blogPosts = posts.map((post) => ({
-    url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: post.date,
-    changeFrequency: "weekly",
+  const blogPosts = posts.map((p) => ({
+    url: `${baseUrl}/blog/${p.slug}`,
+    lastModified: p.date, // string (YYYY-MM-DD) ok
+    changeFrequency: "weekly" as const, // ← literal
     priority: 0.6,
   }));
 
