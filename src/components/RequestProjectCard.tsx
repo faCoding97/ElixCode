@@ -97,7 +97,7 @@ Thank you,
           <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2">
             <a
               href={MAILTO_ORDER}
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--brand)] text-black font-semibold px-4 py-2.5 hover:opacity-90 transition">
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--brand)] text-white font-semibold px-4 py-2.5 hover:opacity-90 transition">
               ✉️ Send Project Request
             </a>
             <a

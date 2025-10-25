@@ -1,25 +1,28 @@
-// src/app/sitemap.ts
 import type { MetadataRoute } from "next";
 import posts from "@/data/posts";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://ElixCode.com";
+  const base = "https://elixcode.com";
 
-  const pages = ["", "/about-contact", "/blog", "/qr", "/portfolio"].map(
-    (path) => ({
-      url: `${baseUrl}${path}`,
-      lastModified: new Date(), // Date ok
-      changeFrequency: "monthly" as const, // ← literal
-      priority: 0.8,
-    })
-  );
+  const pages: MetadataRoute.Sitemap = [
+    "",
+    "/about-contact",
+    "/blog",
+    "/qr",
+    "/portfolio",
+  ].map((path) => ({
+    url: `${base}${path}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
 
-  const blogPosts = posts.map((p) => ({
-    url: `${baseUrl}/blog/${p.slug}`,
-    lastModified: p.date, // string (YYYY-MM-DD) ok
-    changeFrequency: "weekly" as const, // ← literal
+  const blog: MetadataRoute.Sitemap = posts.map((p) => ({
+    url: `${base}/blog/${p.slug}`,
+    lastModified: p.date, // "YYYY-MM-DD"
+    changeFrequency: "weekly" as const,
     priority: 0.6,
   }));
 
-  return [...pages, ...blogPosts];
+  return [...pages, ...blog];
 }

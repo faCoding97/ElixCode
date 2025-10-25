@@ -8,6 +8,7 @@ type Project = {
   title: string;
   description: string;
   tags: string[];
+
 };
 
 const VAR_CONTAINER = {
@@ -97,7 +98,7 @@ export default function Portfolio() {
                   aria-pressed={isActive}
                   className={`px-3 py-1.5 rounded-full border text-sm transition-all focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/60 ${
                     isActive
-                      ? "bg-[var(--brand)] text-black border-transparent"
+                      ? "bg-[var(--brand)] text-white border-transparent"
                       : "border-black/10 dark:border-white/10 hover:border-[var(--brand)]/60"
                   }`}>
                   {t}
@@ -151,6 +152,7 @@ export default function Portfolio() {
                 variants={VAR_ITEM}
                 layout
                 className="group rounded-2xl border border-black/10 dark:border-white/10 bg-[var(--surface)] overflow-hidden hover:shadow-xl transition-shadow h-full flex flex-col">
+               
                 {/* body */}
                 <div className="p-5 flex-1 flex flex-col">
                   <div className="text-[12px] opacity-70">
@@ -174,6 +176,7 @@ export default function Portfolio() {
                       className="text-sm underline opacity-80 hover:opacity-100">
                       Case study →
                     </Link>
+
                   </div>
                 </div>
               </motion.article>

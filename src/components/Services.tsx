@@ -233,7 +233,7 @@ export default function Services() {
           <div className="mt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
               href="/about-contact"
-              className="px-5 py-2.5 rounded-xl bg-[var(--brand)] text-black font-semibold hover:opacity-90 transition">
+              className="px-5 py-2.5 rounded-xl bg-[var(--brand)] text-white font-semibold hover:opacity-90 transition">
               Start a project
             </a>
             <a

@@ -59,7 +59,7 @@ export default function QRTool({ defaultUrl }: { defaultUrl?: string }) {
 
         <button
           onClick={onDownload}
-          className="px-3 py-2 rounded-xl bg-[var(--brand)] text-black font-semibold justify-self-start md:justify-self-end">
+          className="px-3 py-2 rounded-xl bg-[var(--brand)] text-white font-semibold justify-self-start md:justify-self-end">
           Download SVG
         </button>
       </div>

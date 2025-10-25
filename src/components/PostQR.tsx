@@ -30,7 +30,7 @@ export default function PostQR({ url }: { url: string }) {
       <div>
         <button
           onClick={onDownload}
-          className="px-3 py-2 rounded-xl bg-[var(--brand)] text-black font-semibold">
+          className="px-3 py-2 rounded-xl bg-[var(--brand)] text-white font-semibold">
           Download SVG
         </button>
       </div>
