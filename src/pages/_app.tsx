@@ -28,7 +28,7 @@ export function gaEvent(action: string, params: Record<string, any> = {}) {
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
-  const origin = process.env.NEXT_PUBLIC_SITE_ORIGIN || "https://ElixCode.com";
+  const origin = process.env.NEXT_PUBLIC_SITE_ORIGIN || "https://elixcode.com"; // Fix casing to lowercase
 
   const org = {
     "@context": "https://schema.org",
@@ -36,14 +36,19 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     name: "ElixCode",
     url: origin,
     logo: origin + "/images/logo.png",
-    email: "facoding97@gmail.com",
+    email: "elixcode@outlook.com",
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Gqeberha (Port Elizabeth)",
+      addressLocality: "Port Elizabeth (Gqeberha)", // Update to include both names for SEO
       addressRegion: "Eastern Cape",
       addressCountry: "ZA",
     },
-    sameAs: [],
+    sameAs: [
+      // Populate with links (consistent with index.tsx)
+      "https://www.linkedin.com/in/farazaghababayi",
+      "https://github.com/faCoding97",
+      "https://x.com/ElixCode",
+    ],
   };
 
   return (
@@ -79,6 +84,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             rel="noopener noreferrer">
             facoding
           </a>
+          <p className="mt-2">
+            ElixCode — IT Services in Port Elizabeth (Gqeberha), South Africa
+          </p>{" "}
+          {/* New: Add local reference for footer SEO */}
         </footer>
       </div>
 

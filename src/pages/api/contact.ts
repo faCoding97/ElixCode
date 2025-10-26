@@ -17,7 +17,7 @@ export default async function handler(
     : undefined;
   const SMTP_USER = process.env.SMTP_USER;
   const SMTP_PASS = process.env.SMTP_PASS;
-  const NOTIFY_TO = process.env.NOTIFY_TO || "facoding97@gmail.com";
+  const NOTIFY_TO = process.env.NOTIFY_TO || "elixcode@outlook.com";
   const NOTIFY_FROM =
     process.env.NOTIFY_FROM || "ElixCode <no-reply@ElixCode.com>";
 

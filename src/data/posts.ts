@@ -76,6 +76,112 @@ ElixCode — We Build Systems That Work.
   `.trim(),
   },
   {
+    slug: "custom-website-development-port-elizabeth",
+    title: "Why Your Port Elizabeth Business Needs a Custom Website in 2025",
+    date: "2025-10-01",
+    summary:
+      "Discover how a custom website built with Next.js can boost your Port Elizabeth business’s visibility, credibility, and sales in a competitive market.",
+    content: `
+In Port Elizabeth’s growing economy, a professional website is your business’s digital storefront. At ElixCode, we build custom websites that help local businesses stand out, attract customers, and drive growth.
+
+### Why Custom Websites Matter
+- **Local Visibility**: A fast, SEO-optimized website ranks higher on Google for terms like “Port Elizabeth services,” bringing more local customers to your door.
+- **Brand Credibility**: A polished, mobile-friendly site builds trust, showing clients you’re a serious player in Nelson Mandela Bay.
+- **Tailored Features**: From booking systems to e-commerce, we craft solutions that fit your unique needs—no cookie-cutter templates.
+
+### Powered by Next.js
+Our websites use Next.js for lightning-fast load times and top-tier SEO. With Server-Side Rendering (SSR) and Static Site Generation (SSG), your site performs flawlessly on Google and mobile devices.
+
+### Success Story
+A Port Elizabeth clinic saw a 40% increase in appointment bookings after we built their custom website with integrated QR codes for easy access to services.
+
+### Get Started
+Ready to elevate your business? Contact ElixCode for a free consultation on custom website development in Port Elizabeth.
+
+ElixCode — Your Partner for Digital Success in Port Elizabeth.
+  `.trim(),
+  },
+  {
+    slug: "qr-code-solutions-south-africa",
+    title: "How QR Codes Can Transform Your Business in South Africa",
+    date: "2025-09-10",
+    summary:
+      "Learn how ElixCode’s QR code systems connect your Port Elizabeth business to customers, streamline operations, and boost engagement.",
+    content: `
+QR codes are more than a trend—they’re a game-changer for South African businesses. At ElixCode, we create QR-powered systems that link your offline and online worlds, driving sales and efficiency.
+
+### Why QR Codes Work
+- **Instant Access**: Customers scan a QR code on your storefront or flyer to view services, menus, or promotions instantly.
+- **Cost-Effective Marketing**: Update QR-linked content without reprinting materials, saving time and money.
+- **Data Insights**: Track scans to understand customer behavior and refine your strategy.
+
+### Local Impact
+A Port Elizabeth restaurant used our QR system to share digital menus, resulting in 25% more repeat customers and easier updates during price changes.
+
+### How We Build It
+Our QR solutions integrate with your website, POS, or inventory system, built with secure, scalable tech like Next.js and TypeScript.
+
+### Take Action
+Want to connect with customers in Port Elizabeth? Let ElixCode build your QR-powered system today.
+
+ElixCode — Bridging Offline and Online in South Africa.
+  `.trim(),
+  },
+  {
+    slug: "erp-crm-solutions-port-elizabeth",
+    title:
+      "Streamline Your Port Elizabeth Business with Custom ERP & CRM Systems",
+    date: "2025-09-20",
+    summary:
+      "ElixCode’s ERP and CRM solutions help Port Elizabeth businesses manage operations, track performance, and grow smarter.",
+    content: `
+Running a business in Port Elizabeth is tough—managing inventory, finances, and customer relationships shouldn’t be. ElixCode builds custom ERP and CRM systems that simplify your operations and drive growth.
+
+### Benefits of ERP/CRM
+- **Centralized Data**: Access role-based dashboards for finance, HR, or ops in one place.
+- **Real-Time Insights**: Clear KPIs and reports help you make data-driven decisions.
+- **Scalable Design**: Our systems grow with your business, from startups to enterprises.
+
+### Built for You
+Using GraphQL and REST APIs, we integrate your tools for seamless data flow. Offline-friendly UX ensures your team stays productive, even in low-signal areas.
+
+### Local Success
+A Port Elizabeth logistics firm reduced errors by 30% with our custom ERP, streamlining their warehouse operations.
+
+### Get Started
+Ready to simplify your business? Contact ElixCode for a free ERP/CRM consultation in Port Elizabeth.
+
+ElixCode — Systems That Scale with You.
+  `.trim(),
+  },
+  {
+    slug: "seo-port-elizabeth-business",
+    title: "How SEO Can Skyrocket Your Port Elizabeth Business in 2025",
+    date: "2025-09-01",
+    summary:
+      "Boost your Google rankings in Port Elizabeth with ElixCode’s SEO strategies tailored for local businesses.",
+    content: `
+In a competitive market like Port Elizabeth, being found on Google is critical. ElixCode’s SEO services help your business rank higher, attract local customers, and grow.
+
+### Why SEO Matters
+- **Local Discovery**: Rank for terms like “IT services Port Elizabeth” to capture high-intent customers.
+- **Cost-Effective Growth**: SEO drives organic traffic, reducing reliance on paid ads.
+- **Long-Term Results**: A well-optimized site keeps delivering leads for years.
+
+### Our Approach
+We optimize your Next.js website with fast load times, keyword-rich content, and local schema markup. We also build backlinks from trusted South African sites.
+
+### Real Results
+A Port Elizabeth retailer doubled their online leads after our SEO audit and optimization, ranking #1 for their key services.
+
+### Take the Next Step
+Want to dominate Google in Port Elizabeth? Schedule a free SEO consultation with ElixCode today.
+
+ElixCode — Your Path to Page One.
+  `.trim(),
+  },
+
+  {
     slug: "scalable-ecommerce-solutions",
     title: "Scalable E-Commerce: From Startup to Enterprise in One Platform",
     date: "2025-10-25",
