@@ -16,7 +16,7 @@ const SEO = {
     "ElixCode — IT Services & Custom Software in Port Elizabeth (Gqeberha), South Africa",
   description:
     "ElixCode provides custom IT services, ERP/CRM/BPMS, websites, and QR/Barcode systems for businesses in Port Elizabeth (Gqeberha), South Africa — fast, scalable, and secure.",
-  ogImage: `${ORIGIN}/images/og-banner.jpg`,
+  ogImage: `${ORIGIN}/images/logo.png`,
   siteName: "ElixCode",
   phone: "+27 72 933 0166",
   locale: "en_ZA",
