@@ -53,7 +53,7 @@ export default function RequestProjectCard({
             <a
               href={MAILTO_ORDER}
               className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--brand)] text-white font-semibold px-4 py-2.5 hover:opacity-90 transition">
-              <FaPaperPlane className="text-base" /> {/* آیکون جدید */}
+              <FaPaperPlane className="text-base" />
               Send Project Request
             </a>
             <a
@@ -61,19 +61,19 @@ export default function RequestProjectCard({
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#25D366] text-white font-semibold px-4 py-2.5 hover:bg-[#1ebe5d] transition">
-              <FaWhatsapp className="text-base" /> {/* آیکون جدید */}
+              <FaWhatsapp className="text-base" />
               WhatsApp
             </a>
             <a
               href={phoneDial}
-              className="inline-flex items-center justify-center gap-2 rounded-lg border border-black/10 dark:border-white/10 px-4 py-2.5 hover:bg-[var(--surface)] transition">
-              <FaPhone className="text-base" /> {/* آیکون جدید */}
+              className="inline-flex items-center justify-center gap-2 rounded-lg border border-green-500 dark:border-green-500 px-4 py-2.5 hover:bg-[#b2e9b88c] transition">
+              <FaPhone className="text-base" />
               Call <span className="opacity-80">{phoneDisplay}</span>
             </a>
             <a
               href={`mailto:${email}`}
-              className="inline-flex items-center justify-center gap-2 rounded-lg border border-black/10 dark:border-white/10 px-4 py-2.5 hover:bg-[var(--surface)] transition">
-              <FaEnvelope className="text-base" /> {/* آیکون جدید */}
+              className="inline-flex items-center justify-center gap-2 rounded-lg border border-blue-500 dark:border-blue-500 px-4 py-2.5 hover:bg-[#c5e0f29d] transition">
+              <FaEnvelope className="text-base" />
               Email <span className="opacity-80">{email}</span>
             </a>
           </div>
