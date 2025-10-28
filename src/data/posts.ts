@@ -32,7 +32,7 @@ We connect your offline world to your online audience, helping your brand grow f
 
  🧭 Build Credibility That Converts
 Your website is your digital proof of professionalism — fast, mobile-ready, and built for growth.  
-It tells customers: *we’re real, we’re reliable, and we mean business.*
+It tells customers: we’re real, we’re reliable, and we mean business.
 
 ---
 
@@ -48,7 +48,7 @@ At ElixCode, we integrate AI tools that small and local businesses can actually 
 - Predictive analytics that show which services attract the most visitors  
 
 Your site doesn’t just look smart — it acts smart.  
-We call it: *AI-Ready Websites, built for the future.*
+We call it: AI-Ready Websites, built for the future.
 
 ---
 
@@ -152,7 +152,7 @@ Businesses using AI assistants report:
 
 🧩 Your Brand. Your Voice.  
 We design your assistant’s tone to match your identity — friendly, professional, or luxurious.  
-Every word feels like *you.*
+Every word feels like you.
 
 🚀 Ready to Give Your Website a Voice?  
 The future isn’t just websites — it’s AI-driven customer engagement.  
@@ -259,7 +259,7 @@ We integrate your assistant with both your website and WhatsApp, so customers ca
 
 🧠 Trained for Your Business  
 Every assistant is custom-trained using your services, FAQs, and tone of voice.  
-It sounds like *you* — not a robot.
+It sounds like you — not a robot.
 
 🚀 Turn Conversations Into Conversions  
 No missed messages. No long waits.  
@@ -287,7 +287,7 @@ Describe your business once — our AI tools create:
 
 ⚙️ Built Into Your Website Editor  
 You don’t need another app — it’s right inside your ElixCode dashboard.  
-One click: *Generate new content* → Done.
+One click: Generate new content → Done.
 
 🎯 SEO Optimized, Human Reviewed  
 AI writes it, we refine it.  
@@ -382,7 +382,7 @@ Instead of long reports and confusing charts, you get simple answers:
 
 💡 Actionable Recommendations  
 AI doesn’t just report — it recommends.  
-It tells you *what to change* and *why it matters.*
+It tells you what to change and why it matters.
 
 ⚙️ Integrated Into Your ElixCode System  
 No extra setup — it runs quietly behind your dashboard, analyzing and summarizing.
@@ -445,7 +445,7 @@ Enter your business name and type — our AI suggests:
 - A font style that matches your tone  
 
 💡 Designed for Local Entrepreneurs  
-We know South African markets — from hair salons in Walmer to travel agencies in Humewood — and our AI is trained on what works *here.*
+We know South African markets — from hair salons in Walmer to travel agencies in Humewood — and our AI is trained on what works here.
 
 🚀 Launch Fast. Look Professional.  
 In minutes, you get a complete mini-brand pack ready for your website, flyers, and social pages.
@@ -503,7 +503,7 @@ At ElixCode, we build AI-driven tools that help local entrepreneurs focus on wha
 From answering customer messages to posting updates and managing bookings, AI can handle the repetitive work.
 
 📈 Data That Helps You Decide  
-Our systems track what’s working — which posts perform best, which services get more clicks — and tell you *why.*
+Our systems track what’s working — which posts perform best, which services get more clicks — and tell you why.
 
 🤝 Built for South Africans, by South Africans  
 We understand the local economy, customer habits, and cultural tone — your AI tools are customized for your market.
@@ -540,7 +540,7 @@ They chat naturally, respond instantly, and build trust authentically.
 
 🚀 Why Work with ElixCode  
 Because we combine world-class technology with local expertise.  
-We don’t just import AI — we *adapt it* for the South African market.
+We don’t just import AI — we adapt it for the South African market.
 
 The digital revolution is already here.  
 The question is — will your business be part of it?

@@ -29,6 +29,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/portfolio/elixcode-site",
     "/portfolio/analytics-pipeline",
     "/portfolio/custom-checkout",
+    "/blog/website-ai-and-qr-digital-growth",
   ].map((path) => ({
     url: `${base}${path}`,
     lastModified: new Date(), // Keeps it dynamic for static pages

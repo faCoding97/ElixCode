@@ -422,8 +422,9 @@ export default function HeroInteractive() {
             <span className="animate-pulse">|</span>
           </h1>
           <p className="mt-4 text-lg opacity-90">
-            Custom, scalable, and QR-powered digital&amp; systems crafted for
-            performance and trust.
+            AI-powered, scalable, and QR-driven digital systems — engineered for
+            performance, built on trust, and crafted to deliver real-world
+            impact.
           </p>
           <div className="mt-6 flex gap-3">
             <a
